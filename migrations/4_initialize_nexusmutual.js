@@ -50,21 +50,9 @@ module.exports = function(deployer, network, accounts) {
     // let mrAdd = await nxms.getLatestAddress("MR");
     // let pcAdd = await nxms.getLatestAddress("PC");
     let addr = [
-      qd.address,
-      td.address,
-      cd.address,
-      pd.address,
-      qt.address,
-      tf.address,
-      tc.address,
-      cl.address,
-      cr.address,
-      pl1.address,
-      pl2.address,
-      mcr.address,
-      gov.address,
-      propCat.address,
-      mr.address
+      qd.address, td.address, cd.address, pd.address, qt.address, tf.address,
+      tc.address, cl.address, cr.address, pl1.address, pl2.address, mcr.address,
+      gov.address, propCat.address, mr.address
     ];
     await nxms.addNewVersion(addr);
     let pcAddress = await nxms.getLatestAddress('0x5043');
@@ -73,31 +61,20 @@ module.exports = function(deployer, network, accounts) {
     const dai = await DAI.deployed();
     // await qd.changeCurrencyAssetAddress('0x444149', dai.address);
     // await qd.changeInvestmentAssetAddress('0x444149', dai.address);
-    await pl1.sendEther({ from: Owner, value: POOL_ETHER });
-    await pl2.sendEther({ from: Owner, value: POOL_ETHER }); //
-    await mcr.addMCRData(
-      13000,
-      '100000000000000000000',
-      '7000000000000000000000',
-      ['0x455448', '0x444149'],
-      [100, 15517],
-      20190103
-    );
-    await pl2.saveIADetails(
-      ['0x455448', '0x444149'],
-      [100, 15517],
-      20190103,
-      true
-    ); //testing
+    await pl1.sendEther({from : Owner, value : POOL_ETHER});
+    await pl2.sendEther({from : Owner, value : POOL_ETHER}); //
+    await mcr.addMCRData(13000, '100000000000000000000',
+                         '7000000000000000000000', [ '0x455448', '0x444149' ],
+                         [ 100, 15517 ], 20190103);
+    await pl2.saveIADetails([ '0x455448', '0x444149' ], [ 100, 15517 ],
+                            20190103,
+                            true); // testing
     await dai.transfer(pl2.address, POOL_ASSET);
-    let mrInstance = await MemberRoles.at(
-      await nxms.getLatestAddress('0x4d52')
-    );
-    await mrInstance.payJoiningFee(Owner, {
-      from: Owner,
-      value: '2000000000000000'
-    });
+    let mrInstance =
+        await MemberRoles.at(await nxms.getLatestAddress('0x4d52'));
+    await mrInstance.payJoiningFee(Owner,
+                                   {from : Owner, value : '2000000000000000'});
     await mrInstance.kycVerdict(Owner, true);
-    await mrInstance.addInitialABMembers([Owner]);
+    await mrInstance.addInitialABMembers([ Owner ]);
   });
 };

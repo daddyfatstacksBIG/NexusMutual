@@ -15,8 +15,6 @@ async function getValue(...args) {
   return parseInt((val[0] / 1 + val[1] / 1) / 2);
 }
 
-function bigNumberToBN(value) {
-  return new BN(value.toString(), 10);
-}
+function bigNumberToBN(value) { return new BN(value.toString(), 10); }
 
-module.exports = { getValue };
+module.exports = {getValue};
